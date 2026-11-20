@@ -1,0 +1,13 @@
+Use the bundled parser when linking the vendored OpenConnect library statically.
+Otherwise an installed json-parser.pc introduces an undeclared link dependency.
+
+--- a/crates/openconnect/build.rs
++++ b/crates/openconnect/build.rs
+@@ -115,6 +115,7 @@
+     .without("libpcsclite", None)
+     .without("libpskc", None)
+     .without("gssapi", None)
++    .with("builtin-json", None)
+     .with("gnutls", None)
+     .without("openssl", None)
+     .with("gnutls-tss2", Some("no"))

@@ -3,7 +3,7 @@
 
 EAPI=8
 
-inherit xdg
+inherit optfeature xdg
 
 DESCRIPTION="Independent client for GlobalProtect VPN networks (upstream binaries)"
 HOMEPAGE="https://github.com/yuezk/GlobalProtect-openconnect"
@@ -25,10 +25,8 @@ RDEPEND="
 	!net-vpn/globalprotect-openconnect
 	app-arch/lz4
 	app-arch/xz-utils
-	app-crypt/libsecret
 	app-crypt/p11-kit
 	dev-libs/gmp
-	dev-libs/libayatana-appindicator
 	dev-libs/nettle
 	net-libs/gnutls[pkcs11]
 	net-libs/libsoup:3.0
@@ -50,4 +48,9 @@ src_install() {
 	# The helper downloads the desktop client when requested.
 	rm -f artifacts/usr/bin/gpgui || die
 	emake install DESTDIR="${ED}"
+}
+
+pkg_postinst() {
+	xdg_pkg_postinst
+	optfeature "the Native Shell desktop interface" ">=gui-libs/gtk-4.14:4"
 }

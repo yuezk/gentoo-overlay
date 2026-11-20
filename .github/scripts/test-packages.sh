@@ -51,6 +51,10 @@ export MAKEOPTS
 emerge "${emerge_args[@]}" "$package-bin::yuezk"
 verify_install "$package-bin" "$package"
 
+# Exercise the source build with the system JSON parser visible to pkg-config.
+emerge "${emerge_args[@]}" --oneshot dev-libs/json-parser
+pkg-config --exists json-parser
+
 emerge --deselect "$package-bin::yuezk"
 emerge "${emerge_args[@]}" "$package::yuezk"
 verify_install "$package" "$package-bin"

@@ -4,7 +4,7 @@
 EAPI=8
 
 RUST_MIN_VER="1.91.0"
-inherit multiprocessing rust xdg
+inherit multiprocessing optfeature rust xdg
 
 DESCRIPTION="Independent client for GlobalProtect VPN networks"
 HOMEPAGE="https://github.com/yuezk/GlobalProtect-openconnect"
@@ -31,8 +31,6 @@ DEPEND="
 RDEPEND="${DEPEND}
 	!net-vpn/GlobalProtect-openconnect
 	!net-vpn/globalprotect-openconnect-bin
-	app-crypt/libsecret
-	dev-libs/libayatana-appindicator
 	sys-apps/iproute2
 	sys-auth/polkit
 	virtual/secret-service
@@ -46,6 +44,8 @@ BDEPEND+="
 	virtual/pkgconfig
 "
 
+PATCHES=( "${FILESDIR}/${P}-builtin-json.patch" )
+
 src_compile() {
 	export CARGO_BUILD_JOBS=$(makeopts_jobs)
 	export CARGO_PROFILE_RELEASE_STRIP=none
@@ -54,4 +54,9 @@ src_compile() {
 
 src_install() {
 	emake install DESTDIR="${D}" PREFIX="${EPREFIX}/usr"
+}
+
+pkg_postinst() {
+	xdg_pkg_postinst
+	optfeature "the Native Shell desktop interface" ">=gui-libs/gtk-4.14:4"
 }
