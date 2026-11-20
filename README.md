@@ -19,7 +19,7 @@ location = /absolute/path/to/gentoo-overlay
 auto-sync = no
 ```
 
-On stable ARM64, add the package you want to `/etc/portage/package.accept_keywords`, for example:
+On a stable system, accept the testing keyword for your chosen package in `/etc/portage/package.accept_keywords`. Use `~amd64` on x86-64 or `~arm64` on ARM64. For example:
 
 ```text
 net-vpn/globalprotect-openconnect-bin ~arm64

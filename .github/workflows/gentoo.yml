@@ -1,0 +1,42 @@
+name: Gentoo packages
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pkgcheck:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: pkgcore/pkgcheck-action@v1
+
+  install:
+    name: Install and switch packages (${{ matrix.arch }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: amd64
+            runner: ubuntu-24.04
+          - arch: arm64
+            runner: ubuntu-24.04-arm
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: Test the overlay in Gentoo
+        run: |
+          docker run --rm \
+            --volume "$GITHUB_WORKSPACE:/var/db/repos/yuezk:ro" \
+            gentoo/stage3:${{ matrix.arch }}-desktop-systemd \
+            bash /var/db/repos/yuezk/.github/scripts/test-packages.sh

@@ -8,11 +8,11 @@ inherit multiprocessing rust xdg
 
 DESCRIPTION="Independent client for GlobalProtect VPN networks"
 HOMEPAGE="https://github.com/yuezk/GlobalProtect-openconnect"
-SRC_URI="${HOMEPAGE}/releases/download/v${PV}/${P}.offline.tar.gz"
+SRC_URI="https://github.com/yuezk/GlobalProtect-openconnect/releases/download/v${PV}/${P}.offline.tar.gz"
 
 LICENSE="GPL-3 GPL-2+ LGPL-2.1 Apache-2.0 Apache-2.0-with-LLVM-exceptions BSD BSD-2 CDLA-Permissive-2.0 ISC MIT MPL-2.0 Unicode-3.0 ZLIB"
 SLOT="0"
-KEYWORDS="~arm64"
+KEYWORDS="~amd64 ~arm64"
 
 DEPEND="
 	app-arch/lz4:=
