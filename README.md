@@ -7,7 +7,7 @@ GP Connect is an independent client for GlobalProtect VPN networks. The two pack
 | `net-vpn/globalprotect-openconnect` | Builds the client, service, authentication component, and GUI helper from the upstream source release. |
 | `net-vpn/globalprotect-openconnect-bin` | Installs those components from the upstream glibc binary release. |
 
-Both packages use the GUI helper to download the desktop client on demand.
+Both packages use the GUI helper to download the desktop client on demand. The binary ebuild fetches its release archive directly from GitHub. Mirroring is restricted because the original archive also contains the commercial desktop client.
 
 ## Use a local checkout
 
@@ -25,7 +25,14 @@ On stable ARM64, add the package you want to `/etc/portage/package.accept_keywor
 net-vpn/globalprotect-openconnect-bin ~arm64
 ```
 
-For the binary package, enable `net-libs/gnutls pkcs11` in `/etc/portage/package.use`. Install one variant with Portage:
+Both variants require GnuTLS with PKCS#11 support and GTK 3 with both the X11 and Wayland backends. If your profile does not already enable these USE flags, add the following to `/etc/portage/package.use`:
+
+```text
+net-libs/gnutls pkcs11
+x11-libs/gtk+:3 X wayland
+```
+
+Install one variant with Portage:
 
 ```sh
 emerge --ask net-vpn/globalprotect-openconnect-bin::yuezk

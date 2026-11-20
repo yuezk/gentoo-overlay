@@ -21,13 +21,12 @@ DEPEND="
 	dev-libs/gmp:=
 	dev-libs/libxml2:=
 	dev-libs/nettle:=
-	dev-libs/openssl:=
-	net-libs/gnutls:=
+	net-libs/gnutls:=[pkcs11]
 	net-libs/libsoup:3.0
 	net-libs/webkit-gtk:4.1=
 	sys-apps/dbus
 	virtual/zlib:=
-	x11-libs/gtk+:3
+	x11-libs/gtk+:3[X,wayland]
 "
 RDEPEND="${DEPEND}
 	!net-vpn/GlobalProtect-openconnect
