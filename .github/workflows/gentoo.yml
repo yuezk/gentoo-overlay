@@ -19,15 +19,21 @@ jobs:
       - uses: pkgcore/pkgcheck-action@v1
 
   install:
-    name: Install and switch packages (${{ matrix.arch }})
+    name: Install (${{ matrix.arch }}, ${{ matrix.mode }})
     strategy:
       fail-fast: false
       matrix:
+        arch: [amd64, arm64]
+        mode: [desktop, headless]
         include:
           - arch: amd64
             runner: ubuntu-24.04
           - arch: arm64
             runner: ubuntu-24.04-arm
+          - mode: desktop
+            profile: desktop-systemd
+          - mode: headless
+            profile: systemd
     runs-on: ${{ matrix.runner }}
     timeout-minutes: 120
     steps:
@@ -38,5 +44,5 @@ jobs:
         run: |
           docker run --rm \
             --volume "$GITHUB_WORKSPACE:/var/db/repos/yuezk:ro" \
-            gentoo/stage3:${{ matrix.arch }}-desktop-systemd \
-            bash /var/db/repos/yuezk/.github/scripts/test-packages.sh
+            gentoo/stage3:${{ matrix.arch }}-${{ matrix.profile }} \
+            bash /var/db/repos/yuezk/.github/scripts/test-packages.sh ${{ matrix.mode }}
