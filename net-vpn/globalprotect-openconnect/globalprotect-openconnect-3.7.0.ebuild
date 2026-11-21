@@ -44,8 +44,6 @@ BDEPEND+="
 	virtual/pkgconfig
 "
 
-PATCHES=( "${FILESDIR}/${P}-builtin-json.patch" )
-
 src_compile() {
 	export CARGO_BUILD_JOBS=$(makeopts_jobs)
 	export CARGO_PROFILE_RELEASE_STRIP=none
