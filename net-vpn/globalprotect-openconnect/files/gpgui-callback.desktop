@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=GP Connect Login
+Exec=/usr/bin/gpclient launch-gui %u
+MimeType=x-scheme-handler/globalprotectcallback;
+NoDisplay=true
